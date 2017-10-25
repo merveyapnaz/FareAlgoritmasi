@@ -23,12 +23,18 @@ namespace FareAlgoritmasi
         bool mickey = false;
         bool minnie = false;
         int baslama = 0;
-		private void btnCiz_Click(object sender, EventArgs e)
-		{
-			btnMickey.Enabled = true;
-			btnMinnie.Enabled = false;
-			int deger1, deger2;
-			bool deger1Kontrol = true, deger2Kontrol = true;
+        private void btnCiz_Click(object sender, EventArgs e)
+        {
+            btnMickey.Enabled = true;
+            btnMinnie.Enabled = true;
+            int deger1, deger2;
+            bool deger1Kontrol = true, deger2Kontrol = true;
+            if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
+            {
+                MessageBox.Show("Lütfen boyu 15 eni 20'den fazla değer girmeyiniz");
+                btnMickey.Enabled = false;
+                btnMinnie.Enabled = false;
+            }
 
 
 			foreach (char item in txtX.Text)
@@ -93,7 +99,7 @@ namespace FareAlgoritmasi
                 b.Image = Properties.Resources.duvar;
                 dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -1;
             }
-               
+
             else if (mickey)
             {
 				if (dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
@@ -162,9 +168,9 @@ namespace FareAlgoritmasi
         {
             int x = 1, y = 1;
             bool ilkMi = true;
-                   
-            while (dursunMu==false)
-            {        
+
+            while (dursunMu == false)
+            {
                 if (x > xMax || y > yMax) break;
                 int xBulunan = 0, yBulunan = y, min = 0, bulunan = 0;
                 if (ilkMi == true)
@@ -184,20 +190,20 @@ namespace FareAlgoritmasi
                 int[] siralama = new int[] { int.MaxValue, dizi[x, ust], dizi[x, alt], dizi[sol, y], dizi[sag, y] };
                 for (int i = 1; i < siralama.Length; i++)
                 {
-                    if (siralama[i]==-3)
+                    if (siralama[i] == -3)
                     {
-                        MessageBox.Show("Minnie bulundu. Hareket Sayısı : "+hareketSayisi.ToString());
+                        MessageBox.Show("Minnie bulundu. Hareket Sayısı : " + hareketSayisi.ToString());
                         dursunMu = true;
                         break;
 
 
                     }
-					else if(hareketSayisi>Convert.ToInt32(txtX.Text)*Convert.ToInt32(txtY.Text)*3)
-					{
-						MessageBox.Show("Hatalı labirent çizimi... Minnie bulunamadı:( ");
-						dursunMu = true;
-						break;
-					}
+                    else if (hareketSayisi > Convert.ToInt32(txtX.Text) * Convert.ToInt32(txtY.Text) * 3)
+                    {
+                        MessageBox.Show("Hatalı labirent çizimi... Minnie bulunamadı:( ");
+                        dursunMu = true;
+                        break;
+                    }
                     else
                     {
                         if (siralama[i] < siralama[min] && siralama[i] != -1)
@@ -226,9 +232,9 @@ namespace FareAlgoritmasi
                             bulunan = i;
                         }
                     }
-                    
+
                 }
-                if (dursunMu==true)
+                if (dursunMu == true)
                 {
                     break;
                 }
@@ -237,9 +243,9 @@ namespace FareAlgoritmasi
                     if (i is PictureBox)
                     {
 
-                        string[] bol = new string[2];                       
+                        string[] bol = new string[2];
                         bol = (i as PictureBox).Tag.ToString().Split(',');
-                        
+
                         if (bol[0] == xBulunan.ToString() && bol[1] == yBulunan.ToString())
                         {
                             (i as PictureBox).Image = Properties.Resources.mickey;
@@ -306,6 +312,7 @@ namespace FareAlgoritmasi
                     PictureBox b = new PictureBox();
                     if (duvar==true)
                     {
+
                         if (dizi[i, j] == -1)
                         {
                             b.Image = Properties.Resources.duvar;
@@ -316,13 +323,16 @@ namespace FareAlgoritmasi
                             b.BackColor = Color.Transparent;
                         }
                     }
-                                        
+
                     b.Top = yPoint;
                     b.Left = xPoint;
                     b.Height = 50;
                     b.Width = 50;
                     b.Tag = i + "," + j;
-                    b.Click += btnDuvar_Click;
+
+                    
+
+                    b.Click += btnDuvar_Click;                    
                     pnlIcerik.Controls.Add(b);
 
                     if (j == y - 1)
@@ -335,6 +345,8 @@ namespace FareAlgoritmasi
                         xPoint += 50;
                     }
                 }
+
+
             }
         }
     }
