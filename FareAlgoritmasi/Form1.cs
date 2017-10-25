@@ -29,12 +29,7 @@ namespace FareAlgoritmasi
             btnMinnie.Enabled = false;
             int deger1, deger2;
             bool deger1Kontrol = true, deger2Kontrol = true;
-            if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
-            {
-                MessageBox.Show("Lütfen boyu 15 eni 20'den fazla değer girmeyiniz");
-                btnMickey.Enabled = false;
-                btnMinnie.Enabled = false;
-            }
+           
 
 
 			foreach (char item in txtX.Text)
