@@ -72,7 +72,7 @@ namespace FareAlgoritmasi
 				}
 				else MessageBox.Show("Lütfen sayı giriniz");
 
-			
+            btnCiz.Enabled = false;
 
 		}
         int[] mickeyLocation = new int[2];
