@@ -88,7 +88,7 @@ namespace FareAlgoritmasi
             PictureBox b = sender as PictureBox;
             string[] bol = new string[2];
             bol = b.Tag.ToString().Split(',');
-            if (duvar)
+            if (duvar==true && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-3 && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-2)
             {
                 b.Image = Properties.Resources.duvar;
                 dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -1;
@@ -132,8 +132,6 @@ namespace FareAlgoritmasi
 				}
 			
             } 
-
-
 			if(baslaAc)
 				btnBasla.Enabled = true;
 			if (miniAc)
