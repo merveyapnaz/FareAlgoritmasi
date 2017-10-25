@@ -23,41 +23,46 @@ namespace FareAlgoritmasi
         bool mickey = false;
         bool minnie = false;
         int baslama = 0;
-        private void btnCiz_Click(object sender, EventArgs e)
-        {
+		private void btnCiz_Click(object sender, EventArgs e)
+		{
 			btnMickey.Enabled = true;
 			btnMinnie.Enabled = true;
-            int deger1, deger2;
-            bool deger1Kontrol = true, deger2Kontrol = true;
-		
+			int deger1, deger2;
+			bool deger1Kontrol = true, deger2Kontrol = true;
+
 
 			foreach (char item in txtX.Text)
+			{
+				if (item < 47 || item > 58)
 				{
-					if (item < 47 || item > 58)
-					{
-						deger1Kontrol = false;
-						break;
-					}
-
+					deger1Kontrol = false;
+					break;
 				}
 
-				foreach (char item in txtY.Text)
+			}
+
+			foreach (char item in txtY.Text)
+			{
+				if (item < 47 || item > 58)
 				{
-					if (item < 47 || item > 58)
-					{
-						deger2Kontrol = false;
-						break;
-					}
+					deger2Kontrol = false;
+					break;
+
 				}
-				if (deger1Kontrol && deger2Kontrol && txtX.Text != "" && txtY.Text != "")
+			}
+			if (deger1Kontrol && deger2Kontrol && txtX.Text != "" && txtY.Text != "")
+			{
+				if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20 || Convert.ToInt32(txtY.Text) < 4 || Convert.ToInt32(txtX.Text) < 4)
 				{
-				if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
-				{
-					MessageBox.Show("Lütfen boyu 15 eni 20'den fazla değer girmeyiniz");
+					MessageBox.Show("Lütfen boyu 15 eni 20'den fazla ve 4'ten küçük değer girmeyiniz!");
 					btnMickey.Enabled = false;
 					btnMinnie.Enabled = false;
+					btnCiz.Enabled = false;
+
 				}
-				deger1 = Convert.ToInt32(txtX.Text);
+				else
+				{
+					deger1 = Convert.ToInt32(txtX.Text);
 					deger2 = Convert.ToInt32(txtY.Text);
 					dizi = new int[deger1, deger2];
 					for (int i = 0; i < deger1; i++)
@@ -71,11 +76,10 @@ namespace FareAlgoritmasi
 					yMax = deger2;
 					Ciz(deger1, deger2);
 				}
-				else MessageBox.Show("Lütfen sayı giriniz");
-
-			
-
+			}
+			else MessageBox.Show("Lütfen sayı giriniz");
 		}
+
         int[] mickeyLocation = new int[2];
         private void btnDuvar_Click(object sender, EventArgs e)
         {
