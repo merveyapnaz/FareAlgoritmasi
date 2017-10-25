@@ -29,12 +29,7 @@ namespace FareAlgoritmasi
 			btnMinnie.Enabled = true;
             int deger1, deger2;
             bool deger1Kontrol = true, deger2Kontrol = true;
-			if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
-			{
-				MessageBox.Show("Lütfen boyu 15 eni 20'den fazla değer girmeyiniz");
-				btnMickey.Enabled = false;
-				btnMinnie.Enabled = false;
-			}
+		
 
 			foreach (char item in txtX.Text)
 				{
@@ -56,7 +51,13 @@ namespace FareAlgoritmasi
 				}
 				if (deger1Kontrol && deger2Kontrol && txtX.Text != "" && txtY.Text != "")
 				{
-					deger1 = Convert.ToInt32(txtX.Text);
+				if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
+				{
+					MessageBox.Show("Lütfen boyu 15 eni 20'den fazla değer girmeyiniz");
+					btnMickey.Enabled = false;
+					btnMinnie.Enabled = false;
+				}
+				deger1 = Convert.ToInt32(txtX.Text);
 					deger2 = Convert.ToInt32(txtY.Text);
 					dizi = new int[deger1, deger2];
 					for (int i = 0; i < deger1; i++)
