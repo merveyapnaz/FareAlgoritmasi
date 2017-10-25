@@ -22,11 +22,13 @@ namespace FareAlgoritmasi
         bool duvar = true;
         bool mickey = false;
         bool minnie = false;
-        int baslama = 0;
         private void btnCiz_Click(object sender, EventArgs e)
         {
             btnMickey.Enabled = true;
             btnMinnie.Enabled = false;
+			btnCiz.Enabled = false;
+			txtX.Enabled = false;
+			txtY.Enabled = false;
             int deger1, deger2;
             bool deger1Kontrol = true, deger2Kontrol = true;
            
@@ -57,8 +59,9 @@ namespace FareAlgoritmasi
 				{
 					MessageBox.Show("Lütfen boyu 15 eni 20'den fazla ve 4'ten küçük değer girmeyiniz!");
 					btnMickey.Enabled = false;
-					btnMinnie.Enabled = false;
-					btnCiz.Enabled = false;
+					txtY.Enabled = true;
+					txtX.Enabled = true;
+					btnCiz.Enabled = true;
 
 				}
 				else
@@ -78,12 +81,17 @@ namespace FareAlgoritmasi
 					Ciz(deger1, deger2);
 				}
 			}
-			else MessageBox.Show("Lütfen sayı giriniz");
+			else {
+				MessageBox.Show("Lütfen sayı giriniz");
+				btnMickey.Enabled = false;
+				txtY.Enabled = true;
+				txtX.Enabled = true;
+				btnCiz.Enabled = true;
+			}
 		}
 
         int[] mickeyLocation = new int[2];
 		bool baslaAc = false;
-		bool miniAc = false;
 		private void btnDuvar_Click(object sender, EventArgs e)
         {
             PictureBox b = sender as PictureBox;
