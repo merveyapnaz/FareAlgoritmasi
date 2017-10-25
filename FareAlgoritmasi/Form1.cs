@@ -26,7 +26,7 @@ namespace FareAlgoritmasi
         private void btnCiz_Click(object sender, EventArgs e)
         {
             btnMickey.Enabled = true;
-            btnMinnie.Enabled = true;
+            btnMinnie.Enabled = false;
             int deger1, deger2;
             bool deger1Kontrol = true, deger2Kontrol = true;
             if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20)
@@ -109,7 +109,7 @@ namespace FareAlgoritmasi
 				else
 				{
 					b.Image = Properties.Resources.mickey;
-					miniAc = true;
+					btnMinnie.Enabled = true;
 					mickey = false;
 					duvar = true;
 					btnMickey.Enabled = false;
@@ -139,8 +139,7 @@ namespace FareAlgoritmasi
             } 
 			if(baslaAc)
 				btnBasla.Enabled = true;
-			if (miniAc)
-				btnMinnie.Enabled = true;
+		
 		}
 		
 
@@ -285,6 +284,7 @@ namespace FareAlgoritmasi
         {
             duvar = false;
             minnie = true;
+			btnMinnie.Enabled = false;
         }
 
         private void Ciz(int x, int y)
