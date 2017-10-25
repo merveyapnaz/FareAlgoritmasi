@@ -111,10 +111,9 @@ namespace FareAlgoritmasi
 					mickeyLocation[0] = Convert.ToInt32(bol[0]);
 					mickeyLocation[1] = Convert.ToInt32(bol[1]);
 					
-
 				}
 			}               
-            else if (minnie)
+            else if (minnie && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] != -2)
             {
 				
 				if (dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
@@ -141,6 +140,15 @@ namespace FareAlgoritmasi
 
         private async void btnBasla_Click(object sender, EventArgs e)
         {
+			if(dizi[mickeyLocation[0], mickeyLocation[1]-1]==-1 && 
+			   dizi[mickeyLocation[0], mickeyLocation[1]+1]==-1 &&
+			   dizi[mickeyLocation[0]-1, mickeyLocation[1]]==-1 &&
+			   dizi[mickeyLocation[0]+1, mickeyLocation[1]]==-1)
+			{
+				MessageBox.Show("Hatalı labirent çizimi !");
+				dursunMu = true;
+				btnMinnie.Enabled = false;
+			}
             txtX.Enabled = false;
             txtY.Enabled = false;
             btnCiz.Enabled = false;
