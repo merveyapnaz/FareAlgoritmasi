@@ -26,7 +26,7 @@ namespace FareAlgoritmasi
 		private void btnCiz_Click(object sender, EventArgs e)
 		{
 			btnMickey.Enabled = true;
-			btnMinnie.Enabled = true;
+			btnMinnie.Enabled = false;
 			int deger1, deger2;
 			bool deger1Kontrol = true, deger2Kontrol = true;
 
@@ -81,7 +81,9 @@ namespace FareAlgoritmasi
 		}
 
         int[] mickeyLocation = new int[2];
-        private void btnDuvar_Click(object sender, EventArgs e)
+		bool baslaAc = false;
+		bool miniAc = false;
+		private void btnDuvar_Click(object sender, EventArgs e)
         {
             PictureBox b = sender as PictureBox;
             string[] bol = new string[2];
@@ -101,17 +103,20 @@ namespace FareAlgoritmasi
 				else
 				{
 					b.Image = Properties.Resources.mickey;
+					miniAc = true;
 					mickey = false;
 					duvar = true;
 					btnMickey.Enabled = false;
 					dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -2;
 					mickeyLocation[0] = Convert.ToInt32(bol[0]);
 					mickeyLocation[1] = Convert.ToInt32(bol[1]);
+					
+
 				}
 			}               
             else if (minnie)
             {
-
+				
 				if (dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
 				{
 					MessageBox.Show("Lütfen boş olanlara yerleştiriniz!");
@@ -123,13 +128,18 @@ namespace FareAlgoritmasi
 					duvar = true;
 					btnMinnie.Enabled = false;
 					dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -3;
+					baslaAc = true;
 				}
 			
-            }
-                
-        
-            
-        }
+            } 
+
+
+			if(baslaAc)
+				btnBasla.Enabled = true;
+			if (miniAc)
+				btnMinnie.Enabled = true;
+		}
+		
 
         private async void btnBasla_Click(object sender, EventArgs e)
         {
@@ -255,26 +265,14 @@ namespace FareAlgoritmasi
 
         private void btnMickey_Click(object sender, EventArgs e)
         {
-
             duvar = false;
             mickey = true;
-            baslama++;
-            if (baslama==2)
-            {
-                btnBasla.Enabled = true;
-            }
-
         }
 
         private void btnMinnie_Click(object sender, EventArgs e)
         {
             duvar = false;
             minnie = true;
-            baslama++;
-            if (baslama == 2)
-            {
-                btnBasla.Enabled = true;
-            }
         }
 
         private void Ciz(int x, int y)
