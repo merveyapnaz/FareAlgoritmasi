@@ -17,12 +17,13 @@ namespace FareAlgoritmasi
             InitializeComponent();
         }
 
-        int[,] dizi;
+        int[,] degerler;
         int xMax, yMax;
         bool duvar = true;
         bool mickey = false;
         bool minnie = false;
         int[] mickeyLocation = new int[2];
+        //Duvar engeli sayısını tutmaktadır.
         int sayac = 0;
         bool dursunMu = false;
         int hareketSayisi = 0;
@@ -34,7 +35,7 @@ namespace FareAlgoritmasi
             txtX.Enabled = true;
             txtY.Text = "";
             txtY.Enabled = true;
-            btnCiz.Enabled = true;       
+            btnCiz.Enabled = true;
             duvar = true;
             mickey = false;
             minnie = false;
@@ -48,155 +49,161 @@ namespace FareAlgoritmasi
         {
             btnMickey.Enabled = true;
             btnMinnie.Enabled = false;
-			btnCiz.Enabled = false;
-			txtX.Enabled = false;
-			txtY.Enabled = false;
-            int deger1, deger2;
-            bool deger1Kontrol = true, deger2Kontrol = true;
-           
+            btnCiz.Enabled = false;
+            txtX.Enabled = false;
+            txtY.Enabled = false;
+            int Boy, En;
+            bool BoyKontrol = true, EnKontrol = true;
 
 
-			foreach (char item in txtX.Text)
-			{
-				if (item < 47 || item > 58)
-				{
-					deger1Kontrol = false;
-					break;
-				}
 
-			}
+            foreach (char item in txtX.Text)
+            {
+                if (item < 47 || item > 58)
+                {
+                    BoyKontrol = false;
+                    break;
+                }
 
-			foreach (char item in txtY.Text)
-			{
-				if (item < 47 || item > 58)
-				{
-					deger2Kontrol = false;
-					break;
+            }
 
-				}
-			}
-			if (deger1Kontrol && deger2Kontrol && txtX.Text != "" && txtY.Text != "")
-			{
-				if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20 || Convert.ToInt32(txtY.Text) < 4 || Convert.ToInt32(txtX.Text) < 4)
-				{
-					MessageBox.Show("Lütfen boyu 15 eni 20'den fazla ve 4'ten küçük değer girmeyiniz!");
-					btnMickey.Enabled = false;
-					txtY.Enabled = true;
-					txtX.Enabled = true;
-					btnCiz.Enabled = true;
+            foreach (char item in txtY.Text)
+            {
+                if (item < 47 || item > 58)
+                {
+                    EnKontrol = false;
+                    break;
 
-				}
-				else
-				{
-					deger1 = Convert.ToInt32(txtX.Text);
-					deger2 = Convert.ToInt32(txtY.Text);
-					dizi = new int[deger1, deger2];
-					for (int i = 0; i < deger1; i++)
-					{
-						for (int j = 0; j < deger2; j++)
-						{
-							dizi[i, j] = 0;
-						}
-					}
-					xMax = deger1;
-					yMax = deger2;
-					Ciz(deger1, deger2);
-				}
-			}
-			else {
-				MessageBox.Show("Lütfen sayı giriniz");
-				btnMickey.Enabled = false;
-				txtY.Enabled = true;
-				txtX.Enabled = true;
-				btnCiz.Enabled = true;
-			}
-		}
+                }
+            }
+            //Inputlara girilen değerlerin kontrolü yapıldı
+            if (BoyKontrol && EnKontrol && txtX.Text != "" && txtY.Text != "")
+            {
+                if (Convert.ToInt32(txtX.Text) > 15 || Convert.ToInt32(txtY.Text) > 20 || Convert.ToInt32(txtY.Text) < 4 || Convert.ToInt32(txtX.Text) < 4)
+                {
+                    MessageBox.Show("Lütfen boyu 15 eni 20'den fazla ve 4'ten küçük değer girmeyiniz!");
+                    btnMickey.Enabled = false;
+                    txtY.Enabled = true;
+                    txtX.Enabled = true;
+                    btnCiz.Enabled = true;
 
-        
-		private void btnDuvar_Click(object sender, EventArgs e)
+                }
+                else
+                {
+                    Boy = Convert.ToInt32(txtX.Text);
+                    En = Convert.ToInt32(txtY.Text);
+                    //Girilen en ve boy değerlerine göre en*boy boyutunda oyun tahtası oluşturuldu.
+                    degerler = new int[Boy, En];                    
+                    for (int i = 0; i < Boy; i++)
+                    {
+                        for (int j = 0; j < En; j++)
+                        {
+                            degerler[i, j] = 0;
+                        }
+                    }
+                    xMax = Boy;
+                    yMax = En;
+                    Ciz(Boy, En);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen sayı giriniz");
+                btnMickey.Enabled = false;
+                txtY.Enabled = true;
+                txtX.Enabled = true;
+                btnCiz.Enabled = true;
+            }
+        }
+
+
+        private void btnDuvar_Click(object sender, EventArgs e)
         {
             PictureBox b = sender as PictureBox;
             string[] bol = new string[2];
             bol = b.Tag.ToString().Split(',');
-			
-            if (duvar==true && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-3 && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-2)
+            //Mickey fare ve Minnie farenin üzerlerine duvar engeli yerleştirilmesi engellendi
+            if (duvar == true && degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] != -3 && degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] != -2)
             {
                 b.Image = Properties.Resources.duvar;
-                dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -1;
-				sayac++;
+                degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -1;
+                sayac++;
             }
-
+            
             else if (mickey)
             {
-				if (dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
-				{
-					MessageBox.Show("Lütfen boş olanlara yerleştiriniz!");
-				}
-				else
-				{
-					b.Image = Properties.Resources.mickey;
-					btnMinnie.Enabled = true;
-					mickey = false;
-					duvar = true;
-					btnMickey.Enabled = false;
-					dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -2;
-					mickeyLocation[0] = Convert.ToInt32(bol[0]);
-					mickeyLocation[1] = Convert.ToInt32(bol[1]);
-					
-				}
-			}               
-            else if (minnie && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] != -2)
-            {
-				
-				if (dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
-				{
-					MessageBox.Show("Lütfen boş olanlara yerleştiriniz!");
-				}
-				else
-				{
-					b.Image = Properties.Resources.minnie;
-					minnie = false;
-					duvar = true;
-					btnMinnie.Enabled = false;
-					dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -3;
-					btnBasla.Enabled = true;
-				}
+                //Duvar engeli üzerine Mickey farenin yerleştirilmesi engellendi
+                if (degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
+                {
+                    MessageBox.Show("Lütfen boş olanlara yerleştiriniz!");
+                }
+                else
+                {
+                    b.Image = Properties.Resources.mickey;
+                    btnMinnie.Enabled = true;
+                    mickey = false;
+                    duvar = true;
+                    btnMickey.Enabled = false;
+                    degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -2;
+                    mickeyLocation[0] = Convert.ToInt32(bol[0]);
+                    mickeyLocation[1] = Convert.ToInt32(bol[1]);
+
+                }
             }
-	
-			if (sayac == ((xMax-2) * (yMax-2)))
-			{
-				MessageBox.Show("Hatalı labirent çizimi!");
-			}
+            //Mickey farenin üzerine Minnie fare yerleştirilmesi engellendi
+            else if (minnie && degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] != -2)
+            {
+                //Duvar engelinin üzerine Minnie fare yerleştirikmesi engellendi
+                if (degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] == -1)
+                {
+                    MessageBox.Show("Lütfen boş olanlara yerleştiriniz!");
+                }
+                else
+                {
+                    b.Image = Properties.Resources.minnie;
+                    minnie = false;
+                    duvar = true;
+                    btnMinnie.Enabled = false;
+                    degerler[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -3;
+                    btnBasla.Enabled = true;
+                }
+            }
+            //Oyun tahtasıın tamamının duvar engeliyle kaplanması engellendi
+            if (sayac == ((xMax - 2) * (yMax - 2)))
+            {
+                MessageBox.Show("Hatalı labirent çizimi!");
+            }
 
 
-		}
-		
+        }
+
 
         private async void btnBasla_Click(object sender, EventArgs e)
         {
-			if(dizi[mickeyLocation[0], mickeyLocation[1]-1]==-1 && 
-			   dizi[mickeyLocation[0], mickeyLocation[1]+1]==-1 &&
-			   dizi[mickeyLocation[0]-1, mickeyLocation[1]]==-1 &&
-			   dizi[mickeyLocation[0]+1, mickeyLocation[1]]==-1)
-			{
-				MessageBox.Show("Hatalı labirent çizimi !");
-				dursunMu = true;
-				btnMinnie.Enabled = false;
-			}
-			txtX.Enabled = false;
+            //Mickey farenin duvar engelleri arasına sıkıştırılması engellendi
+            if (degerler[mickeyLocation[0], mickeyLocation[1] - 1] == -1 &&
+               degerler[mickeyLocation[0], mickeyLocation[1] + 1] == -1 &&
+               degerler[mickeyLocation[0] - 1, mickeyLocation[1]] == -1 &&
+               degerler[mickeyLocation[0] + 1, mickeyLocation[1]] == -1)
+            {
+                MessageBox.Show("Hatalı labirent çizimi !");
+                dursunMu = true;
+                btnMinnie.Enabled = false;
+            }
+            txtX.Enabled = false;
             txtY.Enabled = false;
             btnCiz.Enabled = false;
             pnlIcerik.Enabled = false;
-            btnBasla.Enabled = false;           
-            await hareket();
+            btnBasla.Enabled = false;
+            await mickeyHareket();
             btnYeniOyun.Enabled = true;
         }
-        
-        private async Task<int> hareket()
+
+        private async Task<int> mickeyHareket()
         {
             int x = 1, y = 1;
             bool ilkMi = true;
-
+            //Mickey fare Minnie fareyi bulduğunda hareketinin sonlandırılması sağlandı
             while (dursunMu == false)
             {
                 if (x > xMax || y > yMax) break;
@@ -215,16 +222,14 @@ namespace FareAlgoritmasi
                 int alt = y + 1;
                 int sol = x - 1;
                 int sag = x + 1;
-                int[] siralama = new int[] { int.MaxValue, dizi[x, ust], dizi[x, alt], dizi[sol, y], dizi[sag, y] };
+                int[] siralama = new int[] { int.MaxValue, degerler[x, ust], degerler[x, alt], degerler[sol, y], degerler[sag, y] };
                 for (int i = 1; i < siralama.Length; i++)
                 {
                     if (siralama[i] == -3)
                     {
                         MessageBox.Show("Minnie bulundu. Hareket Sayısı : " + hareketSayisi.ToString());
-                        dursunMu = true;                        
+                        dursunMu = true;
                         break;
-
-
                     }
                     else if (hareketSayisi > Convert.ToInt32(txtX.Text) * Convert.ToInt32(txtY.Text) * 2)
                     {
@@ -266,11 +271,11 @@ namespace FareAlgoritmasi
                 {
                     break;
                 }
+                //Mickey farenin oyun tahtası üzerindeki gezinme işlemi sağlandı
                 foreach (var i in pnlIcerik.Controls)
                 {
                     if (i is PictureBox)
                     {
-
                         string[] bol = new string[2];
                         bol = (i as PictureBox).Tag.ToString().Split(',');
 
@@ -279,8 +284,8 @@ namespace FareAlgoritmasi
                             (i as PictureBox).Image = Properties.Resources.mickey;
                             (i as PictureBox).Text = "";
                             await Task.Delay(40);
-                            dizi[xBulunan, yBulunan] += 1;
-                            (i as PictureBox).Text = dizi[xBulunan, yBulunan].ToString();
+                            degerler[xBulunan, yBulunan] += 1;
+                            (i as PictureBox).Text = degerler[xBulunan, yBulunan].ToString();
                             (i as PictureBox).BackColor = Color.Transparent;
                             (i as PictureBox).Image = null;
                             hareketSayisi++;
@@ -297,86 +302,86 @@ namespace FareAlgoritmasi
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-        }
 
+        }
+        //Ekrana Mickey fare yerleştirilmesi işleminde kullanıldı
         private void btnMickey_Click(object sender, EventArgs e)
         {
             duvar = false;
             mickey = true;
         }
-
+        //Ekrana Minnie fare yerleştirilmesi işleminde kullanıldı
         private void btnMinnie_Click(object sender, EventArgs e)
         {
             duvar = false;
             minnie = true;
-			btnMinnie.Enabled = false;
+            //İkinci bir Minnie fare yerleştirilmesi engellendi
+            btnMinnie.Enabled = false;
         }
 
         private void btnYeniOyun_Click(object sender, EventArgs e)
         {
+            //Yeni oyun için oyun tahtası temizlenir
             Temizle();
         }
 
         private void Ciz(int x, int y)
         {
+            //Oyun tahtasının kenarlarının duvar engeli ile oluşturulması sağlandı
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
+                    //Duvar sembolü -1 olarak ayarlandı
                     if (i == 0)
-                        dizi[i, j] = -1;
+                        degerler[i, j] = -1;
                     else if (j == 0)
-                        dizi[i, j] = -1;
+                        degerler[i, j] = -1;
                     else if (j == y - 1)
-                        dizi[i, j] = -1;
+                        degerler[i, j] = -1;
                     else if (i == x - 1)
-                        dizi[i, j] = -1;
+                        degerler[i, j] = -1;
+                        
                 }
             }
-
-            int xPoint = 0, yPoint = 0;
+            int xNoktasi = 0, yNoktasi = 0;
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
+                    //Değeri -1 olan yere duvar engeli 0 olan yere boşluk geldi
                     PictureBox b = new PictureBox();
-                    if (duvar==true)
+                    if (duvar == true)
                     {
 
-                        if (dizi[i, j] == -1)
+                        if (degerler[i, j] == -1)
                         {
                             b.Image = Properties.Resources.duvar;
                         }
                         else
                         {
-                            b.Text = "0";
                             b.BackColor = Color.Transparent;
                         }
                     }
 
-                    b.Top = yPoint;
-                    b.Left = xPoint;
+                    b.Top = yNoktasi;
+                    b.Left = xNoktasi;
                     b.Height = 50;
                     b.Width = 50;
                     b.Tag = i + "," + j;
-
-                    
-
-                    b.Click += btnDuvar_Click;                    
+                    b.Click += btnDuvar_Click;
                     pnlIcerik.Controls.Add(b);
-
+                    //Konum değişikliği yapıldı
                     if (j == y - 1)
                     {
-                        xPoint = 0;
-                        yPoint += 50;
+                        xNoktasi = 0;
+                        yNoktasi += 50;
                     }
                     else
                     {
-                        xPoint += 50;
+                        xNoktasi += 50;
                     }
                 }
-
 
             }
         }
