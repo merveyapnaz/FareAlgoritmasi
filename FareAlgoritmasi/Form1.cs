@@ -22,6 +22,28 @@ namespace FareAlgoritmasi
         bool duvar = true;
         bool mickey = false;
         bool minnie = false;
+        int[] mickeyLocation = new int[2];
+        int sayac = 0;
+        bool dursunMu = false;
+        int hareketSayisi = 0;
+
+        public void Temizle()
+        {
+            pnlIcerik.Controls.Clear();
+            txtX.Text = "";
+            txtX.Enabled = true;
+            txtY.Text = "";
+            txtY.Enabled = true;
+            btnCiz.Enabled = true;       
+            duvar = true;
+            mickey = false;
+            minnie = false;
+            sayac = 0;
+            hareketSayisi = 0;
+            dursunMu = false;
+            pnlIcerik.Enabled = true;
+        }
+
         private void btnCiz_Click(object sender, EventArgs e)
         {
             btnMickey.Enabled = true;
@@ -90,8 +112,7 @@ namespace FareAlgoritmasi
 			}
 		}
 
-        int[] mickeyLocation = new int[2];
-		int sayac = 0;
+        
 		private void btnDuvar_Click(object sender, EventArgs e)
         {
             PictureBox b = sender as PictureBox;
@@ -168,9 +189,9 @@ namespace FareAlgoritmasi
             pnlIcerik.Enabled = false;
             btnBasla.Enabled = false;           
             await hareket();
+            btnYeniOyun.Enabled = true;
         }
-        bool dursunMu = false;
-        int hareketSayisi = 0;
+        
         private async Task<int> hareket()
         {
             int x = 1, y = 1;
@@ -200,7 +221,7 @@ namespace FareAlgoritmasi
                     if (siralama[i] == -3)
                     {
                         MessageBox.Show("Minnie bulundu. Hareket Sayısı : " + hareketSayisi.ToString());
-                        dursunMu = true;
+                        dursunMu = true;                        
                         break;
 
 
@@ -290,6 +311,11 @@ namespace FareAlgoritmasi
             duvar = false;
             minnie = true;
 			btnMinnie.Enabled = false;
+        }
+
+        private void btnYeniOyun_Click(object sender, EventArgs e)
+        {
+            Temizle();
         }
 
         private void Ciz(int x, int y)
