@@ -91,16 +91,18 @@ namespace FareAlgoritmasi
 		}
 
         int[] mickeyLocation = new int[2];
-		bool baslaAc = false;
+		int sayac = 0;
 		private void btnDuvar_Click(object sender, EventArgs e)
         {
             PictureBox b = sender as PictureBox;
             string[] bol = new string[2];
             bol = b.Tag.ToString().Split(',');
+			
             if (duvar==true && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-3 && dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] !=-2)
             {
                 b.Image = Properties.Resources.duvar;
                 dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -1;
+				sayac++;
             }
 
             else if (mickey)
@@ -136,13 +138,16 @@ namespace FareAlgoritmasi
 					duvar = true;
 					btnMinnie.Enabled = false;
 					dizi[Convert.ToInt32(bol[0]), Convert.ToInt32(bol[1])] = -3;
-					baslaAc = true;
+					btnBasla.Enabled = true;
 				}
-			
-            } 
-			if(baslaAc)
-				btnBasla.Enabled = true;
-		
+            }
+	
+			if (sayac == ((xMax-2) * (yMax-2)))
+			{
+				MessageBox.Show("Hatalı labirent çizimi!");
+			}
+
+
 		}
 		
 
@@ -157,7 +162,7 @@ namespace FareAlgoritmasi
 				dursunMu = true;
 				btnMinnie.Enabled = false;
 			}
-            txtX.Enabled = false;
+			txtX.Enabled = false;
             txtY.Enabled = false;
             btnCiz.Enabled = false;
             pnlIcerik.Enabled = false;
@@ -200,7 +205,7 @@ namespace FareAlgoritmasi
 
 
                     }
-                    else if (hareketSayisi > Convert.ToInt32(txtX.Text) * Convert.ToInt32(txtY.Text) * 3)
+                    else if (hareketSayisi > Convert.ToInt32(txtX.Text) * Convert.ToInt32(txtY.Text) * 2)
                     {
                         MessageBox.Show("Hatalı labirent çizimi... Minnie bulunamadı:( ");
                         dursunMu = true;
@@ -264,9 +269,6 @@ namespace FareAlgoritmasi
                 }
                 x = xBulunan;
                 y = yBulunan;
-
-
-
                 await Task.Delay(40);
             }
             return 0;
